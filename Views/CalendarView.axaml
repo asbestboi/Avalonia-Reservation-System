@@ -1,0 +1,146 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:ReservationSystem.ViewModels"
+             xmlns:models="using:ReservationSystem.Models"
+             x:Class="ReservationSystem.Views.CalendarView"
+             x:DataType="vm:CalendarViewModel">
+
+    <UserControl.Styles>
+        <Style Selector="Button.day">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="Button.day.today">
+            <Setter Property="BorderBrush" Value="#1976D2"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+        <Style Selector="Button.day.selected">
+            <Setter Property="Background" Value="#1976D2"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style Selector="Button.day:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#E3F2FD"/>
+        </Style>
+        <Style Selector="Button.day.selected:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#1565C0"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid ColumnDefinitions="*,1,300" Margin="16">
+
+        <!-- Calendar section -->
+        <Grid Grid.Column="0" RowDefinitions="Auto,Auto,*">
+
+            <!-- Month navigation -->
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,12">
+                <Button Grid.Column="0"
+                        Content="‹" FontSize="20"
+                        Command="{Binding PreviousMonthCommand}"
+                        Padding="12,4" CornerRadius="4"/>
+                <TextBlock Grid.Column="1"
+                           Text="{Binding CurrentMonth, StringFormat='{}{0:MMMM yyyy}'}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           FontSize="18" FontWeight="SemiBold"/>
+                <Button Grid.Column="2"
+                        Content="›" FontSize="20"
+                        Command="{Binding NextMonthCommand}"
+                        Padding="12,4" CornerRadius="4"/>
+            </Grid>
+
+            <!-- Day-of-week headers -->
+            <UniformGrid Grid.Row="1" Columns="7" Margin="0,0,0,4">
+                <TextBlock Text="Po" HorizontalAlignment="Center" FontWeight="SemiBold" FontSize="12" Foreground="#555"/>
+                <TextBlock Text="Út" HorizontalAlignment="Center" FontWeight="SemiBold" FontSize="12" Foreground="#555"/>
+                <TextBlock Text="St" HorizontalAlignment="Center" FontWeight="SemiBold" FontSize="12" Foreground="#555"/>
+                <TextBlock Text="Čt" HorizontalAlignment="Center" FontWeight="SemiBold" FontSize="12" Foreground="#555"/>
+                <TextBlock Text="Pá" HorizontalAlignment="Center" FontWeight="SemiBold" FontSize="12" Foreground="#555"/>
+                <TextBlock Text="So" HorizontalAlignment="Center" FontWeight="SemiBold" FontSize="12" Foreground="#E53935"/>
+                <TextBlock Text="Ne" HorizontalAlignment="Center" FontWeight="SemiBold" FontSize="12" Foreground="#E53935"/>
+            </UniformGrid>
+
+            <!-- Calendar grid -->
+            <ItemsControl Grid.Row="2" ItemsSource="{Binding CalendarDays}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="7"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Panel Margin="2" MinHeight="52">
+                            <!-- Empty placeholder keeps grid spacing -->
+                            <Button IsVisible="{Binding IsNotEmpty}"
+                                    Classes.day="True"
+                                    Classes.today="{Binding IsToday}"
+                                    Classes.selected="{Binding IsSelected}"
+                                    Command="{Binding $parent[ItemsControl].DataContext.SelectDayCommand}"
+                                    CommandParameter="{Binding}"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch">
+                                <StackPanel HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" Spacing="3">
+                                    <TextBlock Text="{Binding DayNumber}"
+                                               HorizontalAlignment="Center"
+                                               FontSize="14"/>
+                                    <Ellipse Width="5" Height="5"
+                                             Fill="#FF8F00"
+                                             HorizontalAlignment="Center"
+                                             IsVisible="{Binding HasReservations}"/>
+                                </StackPanel>
+                            </Button>
+                        </Panel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+
+        <!-- Divider -->
+        <Rectangle Grid.Column="1" Fill="#E0E0E0" Margin="12,0"/>
+
+        <!-- Daily detail section -->
+        <Grid Grid.Column="2" RowDefinitions="Auto,Auto,*">
+
+            <StackPanel Grid.Row="0" Margin="0,0,0,12" Spacing="4">
+                <TextBlock Text="{Binding SelectedDate, StringFormat='{}{0:dddd, d. MMMM yyyy}'}"
+                           FontSize="15" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                <Button Content="+ Přidat rezervaci"
+                        Command="{Binding AddReservationForDayCommand}"
+                        Background="#1976D2" Foreground="White"
+                        Padding="14,6" CornerRadius="4"/>
+            </StackPanel>
+
+            <TextBlock Grid.Row="1" Text="Rezervace v tento den:"
+                       FontSize="12" Foreground="#666" Margin="0,0,0,6"/>
+
+            <ScrollViewer Grid.Row="2">
+                <ItemsControl ItemsSource="{Binding DailyReservations}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="models:Reservation">
+                            <Border Background="#E3F2FD" Padding="10,8"
+                                    CornerRadius="6" Margin="0,0,0,6">
+                                <StackPanel Spacing="2">
+                                    <TextBlock Text="{Binding Title}"
+                                               FontWeight="SemiBold" FontSize="13"/>
+                                    <TextBlock Text="{Binding TimeRange}"
+                                               FontSize="11" Foreground="#555"/>
+                                    <TextBlock Text="{Binding TypeDisplayName}"
+                                               FontSize="11" Foreground="#888"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Spacing="0"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

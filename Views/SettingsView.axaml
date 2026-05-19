@@ -1,0 +1,70 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:ReservationSystem.ViewModels"
+             x:Class="ReservationSystem.Views.SettingsView"
+             x:DataType="vm:SettingsViewModel">
+
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="40,24" MaxWidth="480">
+
+            <TextBlock Text="Nastavení" FontSize="22" FontWeight="Bold"/>
+
+            <!-- Výchozí uživatel -->
+            <StackPanel Spacing="6">
+                <TextBlock Text="Výchozí uživatel" FontWeight="SemiBold"/>
+                <TextBlock Text="Předvyplní pole 'Rezervoval' při vytváření nové rezervace."
+                           FontSize="12" Foreground="#888"/>
+                <ComboBox ItemsSource="{Binding Users}"
+                          SelectedItem="{Binding SelectedDefaultUser}"
+                          HorizontalAlignment="Stretch"/>
+            </StackPanel>
+
+            <!-- Výchozí délka rezervace -->
+            <StackPanel Spacing="6">
+                <TextBlock Text="Výchozí délka rezervace (minuty)" FontWeight="SemiBold"/>
+                <NumericUpDown Value="{Binding DefaultDuration}"
+                               Minimum="15" Maximum="480" Increment="15"
+                               HorizontalAlignment="Stretch"/>
+            </StackPanel>
+
+            <!-- Cesta k datům -->
+            <StackPanel Spacing="6">
+                <TextBlock Text="Umístění dat (AppData)" FontWeight="SemiBold"/>
+                <TextBox Text="{Binding AppDataPath}"
+                         IsReadOnly="True"
+                         Background="#F5F5F5"/>
+                <TextBlock Text="Zde jsou uloženy soubory rezervací, uživatelů a nastavení."
+                           FontSize="11" Foreground="#888"/>
+            </StackPanel>
+
+            <!-- Soubory uložené v AppData -->
+            <Border Background="#F8F9FA" Padding="12" CornerRadius="6">
+                <StackPanel Spacing="4">
+                    <TextBlock Text="Datové soubory:" FontWeight="SemiBold" FontSize="12"/>
+                    <TextBlock Text="• reservations.txt – rezervace" FontSize="12"/>
+                    <TextBlock Text="• resources.txt   – prostředky (učebny, sportoviště…)" FontSize="12"/>
+                    <TextBlock Text="• users.txt       – seznam uživatelů" FontSize="12"/>
+                    <TextBlock Text="• settings.txt    – nastavení aplikace" FontSize="12"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Stav -->
+            <TextBlock Text="{Binding StatusMessage}"
+                       Foreground="#388E3C" FontSize="13"
+                       IsVisible="{Binding StatusMessage,
+                           Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+
+            <!-- Tlačítka -->
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <Button Content="← Zpět"
+                        Command="{Binding BackCommand}"
+                        Padding="16,8" CornerRadius="4"/>
+                <Button Content="Uložit nastavení"
+                        Command="{Binding SaveCommand}"
+                        Background="#1976D2" Foreground="White"
+                        Padding="16,8" CornerRadius="4"/>
+            </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

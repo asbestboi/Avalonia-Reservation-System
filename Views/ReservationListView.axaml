@@ -1,0 +1,70 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:ReservationSystem.ViewModels"
+             xmlns:models="using:ReservationSystem.Models"
+             x:Class="ReservationSystem.Views.ReservationListView"
+             x:DataType="vm:ReservationListViewModel">
+
+    <Grid RowDefinitions="Auto,*,Auto" Margin="16">
+
+        <!-- Toolbar -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8" Margin="0,0,0,12">
+            <Button Content="+ Nová rezervace"
+                    Command="{Binding AddReservationCommand}"
+                    Background="#1976D2" Foreground="White" Padding="14,7" CornerRadius="4"/>
+            <Button Content="Upravit"
+                    Command="{Binding EditReservationCommand}"
+                    Padding="14,7" CornerRadius="4"/>
+            <Button Content="Smazat"
+                    Command="{Binding DeleteReservationCommand}"
+                    Background="#E53935" Foreground="White" Padding="14,7" CornerRadius="4"/>
+            <Separator Width="1" Background="#CCCCCC" Margin="4,2"/>
+            <Button Content="Export do TXT"
+                    Command="{Binding ExportToTxtCommand}"
+                    Padding="14,7" CornerRadius="4"/>
+            <TextBox Watermark="🔍 Hledat..."
+                     Text="{Binding FilterText}"
+                     Width="200" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Reservation list -->
+        <Border Grid.Row="1" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="6">
+            <ListBox ItemsSource="{Binding Reservations}"
+                     SelectedItem="{Binding SelectedReservation}"
+                     Background="Transparent">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="models:Reservation">
+                        <Grid ColumnDefinitions="8,*,Auto" Margin="8,6">
+                            <!-- Type color bar -->
+                            <Border Grid.Column="0" CornerRadius="4" Width="6"
+                                    Background="#1976D2" Margin="0,2,10,2"/>
+
+                            <StackPanel Grid.Column="1" Spacing="2">
+                                <TextBlock Text="{Binding Title}"
+                                           FontWeight="SemiBold" FontSize="14"/>
+                                <TextBlock Text="{Binding TimeRange}"
+                                           FontSize="12" Foreground="#666666"/>
+                                <TextBlock Text="{Binding Description}"
+                                           FontSize="11" Foreground="#888888"
+                                           IsVisible="{Binding Description,
+                                               Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+                            </StackPanel>
+
+                            <TextBlock Grid.Column="2"
+                                       Text="{Binding TypeDisplayName}"
+                                       VerticalAlignment="Center"
+                                       Foreground="#888888" FontSize="12"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+
+        <!-- Status bar -->
+        <TextBlock Grid.Row="2"
+                   Text="{Binding StatusMessage}"
+                   Foreground="#388E3C" Margin="0,8,0,0" FontSize="12"
+                   IsVisible="{Binding StatusMessage,
+                       Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+    </Grid>
+</UserControl>

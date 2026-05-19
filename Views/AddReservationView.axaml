@@ -1,0 +1,96 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:ReservationSystem.ViewModels"
+             xmlns:models="using:ReservationSystem.Models"
+             x:Class="ReservationSystem.Views.AddReservationView"
+             x:DataType="vm:AddReservationViewModel">
+
+    <ScrollViewer>
+        <StackPanel Spacing="16" Margin="40,24" MaxWidth="520">
+
+            <TextBlock Text="{Binding WindowTitle}"
+                       FontSize="22" FontWeight="Bold" Margin="0,0,0,8"/>
+
+            <!-- Název -->
+            <StackPanel Spacing="4">
+                <TextBlock Text="Název rezervace *" FontWeight="SemiBold"/>
+                <TextBox Text="{Binding Title}" Watermark="Zadejte název rezervace..."/>
+            </StackPanel>
+
+            <!-- Typ -->
+            <StackPanel Spacing="4">
+                <TextBlock Text="Typ" FontWeight="SemiBold"/>
+                <ComboBox ItemsSource="{Binding Types}"
+                          SelectedItem="{Binding SelectedType}"
+                          HorizontalAlignment="Stretch"/>
+            </StackPanel>
+
+            <!-- Prostředek -->
+            <StackPanel Spacing="4">
+                <TextBlock Text="Prostředek *" FontWeight="SemiBold"/>
+                <ComboBox ItemsSource="{Binding Resources}"
+                          SelectedItem="{Binding SelectedResource}"
+                          HorizontalAlignment="Stretch"/>
+            </StackPanel>
+
+            <!-- Uživatel -->
+            <StackPanel Spacing="4">
+                <TextBlock Text="Rezervoval *" FontWeight="SemiBold"/>
+                <ComboBox ItemsSource="{Binding Users}"
+                          SelectedItem="{Binding SelectedUser}"
+                          HorizontalAlignment="Stretch"/>
+            </StackPanel>
+
+            <!-- Datum -->
+            <StackPanel Spacing="4">
+                <TextBlock Text="Datum" FontWeight="SemiBold"/>
+                <DatePicker SelectedDate="{Binding StartDate}"
+                            HorizontalAlignment="Stretch"/>
+            </StackPanel>
+
+            <!-- Čas -->
+            <Grid ColumnDefinitions="*,20,*">
+                <StackPanel Grid.Column="0" Spacing="4">
+                    <TextBlock Text="Začátek" FontWeight="SemiBold"/>
+                    <TimePicker SelectedTime="{Binding StartTime}"
+                                HorizontalAlignment="Stretch"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Spacing="4">
+                    <TextBlock Text="Konec" FontWeight="SemiBold"/>
+                    <TimePicker SelectedTime="{Binding EndTime}"
+                                HorizontalAlignment="Stretch"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Poznámka -->
+            <StackPanel Spacing="4">
+                <TextBlock Text="Poznámka" FontWeight="SemiBold"/>
+                <TextBox Text="{Binding Description}"
+                         Watermark="Volitelný popis..."
+                         Height="80" AcceptsReturn="True"
+                         TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <!-- Chybová zpráva -->
+            <Border Background="#FFEBEE" Padding="12,8" CornerRadius="4"
+                    IsVisible="{Binding ErrorMessage,
+                        Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                <TextBlock Text="{Binding ErrorMessage}"
+                           Foreground="#C62828" TextWrapping="Wrap"/>
+            </Border>
+
+            <!-- Tlačítka -->
+            <StackPanel Orientation="Horizontal" Spacing="8"
+                        HorizontalAlignment="Right" Margin="0,8,0,0">
+                <Button Content="Zrušit"
+                        Command="{Binding CancelCommand}"
+                        Padding="20,8" CornerRadius="4"/>
+                <Button Content="Uložit"
+                        Command="{Binding SaveCommand}"
+                        Background="#1976D2" Foreground="White"
+                        Padding="20,8" CornerRadius="4"/>
+            </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
