@@ -11,21 +11,33 @@
         <Style Selector="Button.nav">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Padding" Value="14,6"/>
-            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="Padding" Value="16,7"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="FontSize" Value="14"/>
         </Style>
         <Style Selector="Button.nav:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="#1565C0"/>
+            <Setter Property="Background" Value="#0D47A1"/>
+            <Setter Property="TextBlock.Foreground" Value="White"/>
+        </Style>
+        <Style Selector="Button.nav:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="#0B3C8C"/>
+            <Setter Property="TextBlock.Foreground" Value="White"/>
         </Style>
     </Window.Styles>
 
     <DockPanel>
         <!-- Navigation bar -->
-        <Border DockPanel.Dock="Top" Background="#1976D2" Padding="12,6">
-            <StackPanel Orientation="Horizontal" Spacing="4">
+        <Border DockPanel.Dock="Top" Padding="16,10">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,0%">
+                    <GradientStop Offset="0" Color="#1565C0"/>
+                    <GradientStop Offset="1" Color="#1E88E5"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <StackPanel Orientation="Horizontal" Spacing="6">
                 <TextBlock Text="Rezervační systém"
-                           VerticalAlignment="Center" FontSize="16"
-                           FontWeight="Bold" Foreground="White" Margin="0,0,24,0"/>
+                           VerticalAlignment="Center" FontSize="17"
+                           FontWeight="Bold" Foreground="White" Margin="0,0,28,0"/>
                 <Button Content="Rezervace"
                         Command="{Binding ShowReservationListCommand}"
                         Classes="nav"/>
@@ -39,6 +51,7 @@
         </Border>
 
         <!-- Content switches via ViewLocator -->
-        <ContentControl Content="{Binding CurrentView}"/>
+        <ContentControl Content="{Binding CurrentView}"
+                        Background="{StaticResource AppBackgroundBrush}"/>
     </DockPanel>
 </Window>

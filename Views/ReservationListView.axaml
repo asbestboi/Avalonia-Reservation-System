@@ -2,58 +2,86 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:ReservationSystem.ViewModels"
              xmlns:models="using:ReservationSystem.Models"
+             xmlns:conv="using:ReservationSystem.Converters"
              x:Class="ReservationSystem.Views.ReservationListView"
              x:DataType="vm:ReservationListViewModel">
 
-    <Grid RowDefinitions="Auto,*,Auto" Margin="16">
+    <UserControl.Resources>
+        <conv:TypeToBrushConverter x:Key="TypeToBrush"/>
+    </UserControl.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="20">
 
         <!-- Toolbar -->
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8" Margin="0,0,0,12">
-            <Button Content="+ Nová rezervace"
-                    Command="{Binding AddReservationCommand}"
-                    Background="#1976D2" Foreground="White" Padding="14,7" CornerRadius="4"/>
-            <Button Content="Upravit"
-                    Command="{Binding EditReservationCommand}"
-                    Padding="14,7" CornerRadius="4"/>
-            <Button Content="Smazat"
-                    Command="{Binding DeleteReservationCommand}"
-                    Background="#E53935" Foreground="White" Padding="14,7" CornerRadius="4"/>
-            <Separator Width="1" Background="#CCCCCC" Margin="4,2"/>
-            <Button Content="Export do TXT"
-                    Command="{Binding ExportToTxtCommand}"
-                    Padding="14,7" CornerRadius="4"/>
-            <TextBox Watermark="🔍 Hledat..."
-                     Text="{Binding FilterText}"
-                     Width="200" VerticalAlignment="Center"/>
+        <Border Grid.Row="0" Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                CornerRadius="10" Padding="12,10" Margin="0,0,0,14">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <Button Content="+ Nová rezervace"
+                        Command="{Binding AddReservationCommand}"
+                        Background="{StaticResource PrimaryBrush}" Foreground="White"/>
+                <Button Content="Upravit"
+                        Command="{Binding EditReservationCommand}"/>
+                <Button Content="Smazat"
+                        Command="{Binding DeleteReservationCommand}"
+                        Background="{StaticResource DangerBrush}" Foreground="White"/>
+                <Separator Width="1" Background="{StaticResource BorderBrush}" Margin="4,2"/>
+                <Button Content="Export do TXT"
+                        Command="{Binding ExportToTxtCommand}"/>
+                <TextBox Watermark="Hledat..."
+                         Text="{Binding FilterText}"
+                         Width="200" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Legenda barev typů -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="16" Margin="2,0,0,12">
+            <StackPanel Orientation="Horizontal" Spacing="6">
+                <Border Width="12" Height="12" CornerRadius="3" Background="#1976D2" VerticalAlignment="Center"/>
+                <TextBlock Text="Učebna" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="6">
+                <Border Width="12" Height="12" CornerRadius="3" Background="#2E7D32" VerticalAlignment="Center"/>
+                <TextBlock Text="Sportoviště" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="6">
+                <Border Width="12" Height="12" CornerRadius="3" Background="#F57C00" VerticalAlignment="Center"/>
+                <TextBlock Text="Vybavení" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
+            </StackPanel>
         </StackPanel>
 
         <!-- Reservation list -->
-        <Border Grid.Row="1" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="6">
+        <Border Grid.Row="2" Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" CornerRadius="10">
             <ListBox ItemsSource="{Binding Reservations}"
                      SelectedItem="{Binding SelectedReservation}"
-                     Background="Transparent">
+                     Background="Transparent" Padding="6">
                 <ListBox.ItemTemplate>
                     <DataTemplate x:DataType="models:Reservation">
-                        <Grid ColumnDefinitions="8,*,Auto" Margin="8,6">
+                        <Grid ColumnDefinitions="8,*,Auto" Margin="8,8">
                             <!-- Type color bar -->
                             <Border Grid.Column="0" CornerRadius="4" Width="6"
-                                    Background="#1976D2" Margin="0,2,10,2"/>
+                                    Background="{Binding Type, Converter={StaticResource TypeToBrush}}"
+                                    Margin="0,2,12,2"/>
 
-                            <StackPanel Grid.Column="1" Spacing="2">
+                            <StackPanel Grid.Column="1" Spacing="3">
                                 <TextBlock Text="{Binding Title}"
-                                           FontWeight="SemiBold" FontSize="14"/>
+                                           FontWeight="SemiBold" FontSize="14"
+                                           Foreground="{StaticResource TextPrimaryBrush}"/>
                                 <TextBlock Text="{Binding TimeRange}"
-                                           FontSize="12" Foreground="#666666"/>
+                                           FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
                                 <TextBlock Text="{Binding Description}"
-                                           FontSize="11" Foreground="#888888"
+                                           FontSize="11" Foreground="{StaticResource TextMutedBrush}"
                                            IsVisible="{Binding Description,
                                                Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
                             </StackPanel>
 
-                            <TextBlock Grid.Column="2"
-                                       Text="{Binding TypeDisplayName}"
-                                       VerticalAlignment="Center"
-                                       Foreground="#888888" FontSize="12"/>
+                            <Border Grid.Column="2" VerticalAlignment="Center"
+                                    Background="{StaticResource SurfaceAltBrush}"
+                                    CornerRadius="12" Padding="10,4">
+                                <TextBlock Text="{Binding TypeDisplayName}"
+                                           Foreground="{StaticResource TextSecondaryBrush}" FontSize="11"/>
+                            </Border>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -61,9 +89,9 @@
         </Border>
 
         <!-- Status bar -->
-        <TextBlock Grid.Row="2"
+        <TextBlock Grid.Row="3"
                    Text="{Binding StatusMessage}"
-                   Foreground="#388E3C" Margin="0,8,0,0" FontSize="12"
+                   Foreground="{StaticResource SuccessBrush}" Margin="2,10,0,0" FontSize="12"
                    IsVisible="{Binding StatusMessage,
                        Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
     </Grid>

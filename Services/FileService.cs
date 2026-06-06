@@ -99,12 +99,21 @@ public class FileService
             ]);
         }
 
-        if (LoadUsers().Count == 0)
+        var users = LoadUsers();
+        if (users.Count == 0)
         {
-            SaveUsers([
+            users =
+            [
+                new() { Name = "Adam Bauer", Email = "adam.bauer@skola.cz" },
                 new() { Name = "Jan Novák", Email = "jan.novak@skola.cz" },
                 new() { Name = "Marie Dvořáková", Email = "marie.dvorakova@skola.cz" }
-            ]);
+            ];
+            SaveUsers(users);
+        }
+        else if (!users.Any(u => u.Name == "Adam Bauer"))
+        {
+            users.Add(new() { Name = "Adam Bauer", Email = "adam.bauer@skola.cz" });
+            SaveUsers(users);
         }
     }
 }

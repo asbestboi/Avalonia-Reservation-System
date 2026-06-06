@@ -2,8 +2,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:ReservationSystem.ViewModels"
              xmlns:models="using:ReservationSystem.Models"
+             xmlns:conv="using:ReservationSystem.Converters"
              x:Class="ReservationSystem.Views.CalendarView"
              x:DataType="vm:CalendarViewModel">
+
+    <UserControl.Resources>
+        <conv:TypeToBrushConverter x:Key="TypeToBrush"/>
+    </UserControl.Resources>
 
     <UserControl.Styles>
         <Style Selector="Button.day">
@@ -31,10 +36,13 @@
         </Style>
     </UserControl.Styles>
 
-    <Grid ColumnDefinitions="*,1,300" Margin="16">
+    <Grid ColumnDefinitions="*,16,300" Margin="20">
 
         <!-- Calendar section -->
-        <Grid Grid.Column="0" RowDefinitions="Auto,Auto,*">
+        <Border Grid.Column="0" Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                CornerRadius="10" Padding="16">
+        <Grid RowDefinitions="Auto,Auto,*">
 
             <!-- Month navigation -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,12">
@@ -98,12 +106,13 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Grid>
-
-        <!-- Divider -->
-        <Rectangle Grid.Column="1" Fill="#E0E0E0" Margin="12,0"/>
+        </Border>
 
         <!-- Daily detail section -->
-        <Grid Grid.Column="2" RowDefinitions="Auto,Auto,*">
+        <Border Grid.Column="2" Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                CornerRadius="10" Padding="16">
+        <Grid RowDefinitions="Auto,Auto,*">
 
             <StackPanel Grid.Row="0" Margin="0,0,0,12" Spacing="4">
                 <TextBlock Text="{Binding SelectedDate, StringFormat='{}{0:dddd, d. MMMM yyyy}'}"
@@ -121,16 +130,21 @@
                 <ItemsControl ItemsSource="{Binding DailyReservations}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="models:Reservation">
-                            <Border Background="#E3F2FD" Padding="10,8"
-                                    CornerRadius="6" Margin="0,0,0,6">
-                                <StackPanel Spacing="2">
-                                    <TextBlock Text="{Binding Title}"
-                                               FontWeight="SemiBold" FontSize="13"/>
-                                    <TextBlock Text="{Binding TimeRange}"
-                                               FontSize="11" Foreground="#555"/>
-                                    <TextBlock Text="{Binding TypeDisplayName}"
-                                               FontSize="11" Foreground="#888"/>
-                                </StackPanel>
+                            <Border Background="{StaticResource SurfaceAltBrush}" Padding="0"
+                                    CornerRadius="6" Margin="0,0,0,6" ClipToBounds="True">
+                                <Grid ColumnDefinitions="5,*">
+                                    <Border Grid.Column="0"
+                                            Background="{Binding Type, Converter={StaticResource TypeToBrush}}"/>
+                                    <StackPanel Grid.Column="1" Spacing="2" Margin="10,8">
+                                        <TextBlock Text="{Binding Title}"
+                                                   FontWeight="SemiBold" FontSize="13"
+                                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                                        <TextBlock Text="{Binding TimeRange}"
+                                                   FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"/>
+                                        <TextBlock Text="{Binding TypeDisplayName}"
+                                                   FontSize="11" Foreground="{StaticResource TextMutedBrush}"/>
+                                    </StackPanel>
+                                </Grid>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -142,5 +156,6 @@
                 </ItemsControl>
             </ScrollViewer>
         </Grid>
+        </Border>
     </Grid>
 </UserControl>

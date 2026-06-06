@@ -2,11 +2,54 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="ReservationSystem.App"
              xmlns:local="using:ReservationSystem"
-             RequestedThemeVariant="Default">
+             RequestedThemeVariant="Light">
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
+
+    <Application.Resources>
+        <!-- Barevná paleta aplikace -->
+        <Color x:Key="PrimaryColor">#1976D2</Color>
+        <Color x:Key="PrimaryDarkColor">#1565C0</Color>
+        <Color x:Key="DangerColor">#E53935</Color>
+        <Color x:Key="SuccessColor">#2E7D32</Color>
+
+        <SolidColorBrush x:Key="PrimaryBrush" Color="#1976D2"/>
+        <SolidColorBrush x:Key="PrimaryDarkBrush" Color="#1565C0"/>
+        <SolidColorBrush x:Key="DangerBrush" Color="#E53935"/>
+        <SolidColorBrush x:Key="SuccessBrush" Color="#2E7D32"/>
+
+        <!-- Neutrální plochy a text -->
+        <SolidColorBrush x:Key="AppBackgroundBrush" Color="#F4F6F8"/>
+        <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="SurfaceAltBrush" Color="#F8F9FA"/>
+        <SolidColorBrush x:Key="BorderBrush" Color="#E2E6EA"/>
+        <SolidColorBrush x:Key="TextPrimaryBrush" Color="#1F2933"/>
+        <SolidColorBrush x:Key="TextSecondaryBrush" Color="#6B7783"/>
+        <SolidColorBrush x:Key="TextMutedBrush" Color="#9AA5B1"/>
+    </Application.Resources>
+
     <Application.Styles>
         <FluentTheme />
+
+        <!-- Globální vzhled -->
+        <Style Selector="Window">
+            <Setter Property="Background" Value="{StaticResource AppBackgroundBrush}"/>
+        </Style>
+
+        <!-- Sjednocené ovládací prvky -->
+        <Style Selector="Button">
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="14,7"/>
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="CornerRadius" Value="6"/>
+        </Style>
+        <Style Selector="ComboBox">
+            <Setter Property="CornerRadius" Value="6"/>
+        </Style>
+        <Style Selector="NumericUpDown">
+            <Setter Property="CornerRadius" Value="6"/>
+        </Style>
     </Application.Styles>
 </Application>

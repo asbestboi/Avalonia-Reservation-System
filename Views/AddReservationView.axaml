@@ -6,10 +6,16 @@
              x:DataType="vm:AddReservationViewModel">
 
     <ScrollViewer>
-        <StackPanel Spacing="16" Margin="40,24" MaxWidth="520">
+        <StackPanel Spacing="16" Margin="40,28" MaxWidth="540">
 
             <TextBlock Text="{Binding WindowTitle}"
-                       FontSize="22" FontWeight="Bold" Margin="0,0,0,8"/>
+                       FontSize="24" FontWeight="Bold" Margin="0,0,0,4"
+                       Foreground="{StaticResource TextPrimaryBrush}"/>
+
+          <Border Background="{StaticResource SurfaceBrush}"
+                  BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                  CornerRadius="10" Padding="22">
+            <StackPanel Spacing="16">
 
             <!-- Název -->
             <StackPanel Spacing="4">
@@ -70,6 +76,9 @@
                          Height="80" AcceptsReturn="True"
                          TextWrapping="Wrap"/>
             </StackPanel>
+
+            </StackPanel>
+          </Border>
 
             <!-- Chybová zpráva -->
             <Border Background="#FFEBEE" Padding="12,8" CornerRadius="4"

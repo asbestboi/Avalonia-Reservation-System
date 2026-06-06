@@ -5,52 +5,71 @@
              x:DataType="vm:SettingsViewModel">
 
     <ScrollViewer>
-        <StackPanel Spacing="20" Margin="40,24" MaxWidth="480">
+        <StackPanel Spacing="18" Margin="40,28" MaxWidth="520">
 
-            <TextBlock Text="Nastavení" FontSize="22" FontWeight="Bold"/>
+            <TextBlock Text="Nastavení" FontSize="24" FontWeight="Bold"
+                       Foreground="{StaticResource TextPrimaryBrush}"/>
 
-            <!-- Výchozí uživatel -->
-            <StackPanel Spacing="6">
-                <TextBlock Text="Výchozí uživatel" FontWeight="SemiBold"/>
-                <TextBlock Text="Předvyplní pole 'Rezervoval' při vytváření nové rezervace."
-                           FontSize="12" Foreground="#888"/>
-                <ComboBox ItemsSource="{Binding Users}"
-                          SelectedItem="{Binding SelectedDefaultUser}"
-                          HorizontalAlignment="Stretch"/>
-            </StackPanel>
+            <!-- Karta s nastavením -->
+            <Border Background="{StaticResource SurfaceBrush}"
+                    BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                    CornerRadius="10" Padding="20">
+                <StackPanel Spacing="20">
 
-            <!-- Výchozí délka rezervace -->
-            <StackPanel Spacing="6">
-                <TextBlock Text="Výchozí délka rezervace (minuty)" FontWeight="SemiBold"/>
-                <NumericUpDown Value="{Binding DefaultDuration}"
-                               Minimum="15" Maximum="480" Increment="15"
-                               HorizontalAlignment="Stretch"/>
-            </StackPanel>
+                    <!-- Výchozí uživatel -->
+                    <StackPanel Spacing="6">
+                        <TextBlock Text="Výchozí uživatel" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                        <TextBlock Text="Předvyplní pole 'Rezervoval' při vytváření nové rezervace."
+                                   FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <ComboBox ItemsSource="{Binding Users}"
+                                  SelectedItem="{Binding SelectedDefaultUser}"
+                                  HorizontalAlignment="Stretch"/>
+                    </StackPanel>
 
-            <!-- Cesta k datům -->
-            <StackPanel Spacing="6">
-                <TextBlock Text="Umístění dat (AppData)" FontWeight="SemiBold"/>
-                <TextBox Text="{Binding AppDataPath}"
-                         IsReadOnly="True"
-                         Background="#F5F5F5"/>
-                <TextBlock Text="Zde jsou uloženy soubory rezervací, uživatelů a nastavení."
-                           FontSize="11" Foreground="#888"/>
-            </StackPanel>
+                    <!-- Výchozí délka rezervace -->
+                    <StackPanel Spacing="6">
+                        <TextBlock Text="Výchozí délka rezervace (minuty)" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                        <NumericUpDown Value="{Binding DefaultDuration}"
+                                       Minimum="15" Maximum="480" Increment="15"
+                                       HorizontalAlignment="Stretch"/>
+                    </StackPanel>
+
+                    <!-- Cesta k datům -->
+                    <StackPanel Spacing="6">
+                        <TextBlock Text="Umístění dat (AppData)" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                        <TextBox Text="{Binding AppDataPath}"
+                                 IsReadOnly="True"
+                                 Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <TextBlock Text="Zde jsou uloženy soubory rezervací, uživatelů a nastavení."
+                                   FontSize="11" Foreground="{StaticResource TextMutedBrush}"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
 
             <!-- Soubory uložené v AppData -->
-            <Border Background="#F8F9FA" Padding="12" CornerRadius="6">
-                <StackPanel Spacing="4">
-                    <TextBlock Text="Datové soubory:" FontWeight="SemiBold" FontSize="12"/>
-                    <TextBlock Text="• reservations.txt – rezervace" FontSize="12"/>
-                    <TextBlock Text="• resources.txt   – prostředky (učebny, sportoviště…)" FontSize="12"/>
-                    <TextBlock Text="• users.txt       – seznam uživatelů" FontSize="12"/>
-                    <TextBlock Text="• settings.txt    – nastavení aplikace" FontSize="12"/>
+            <Border Background="{StaticResource SurfaceAltBrush}"
+                    BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                    Padding="16" CornerRadius="10">
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Datové soubory:" FontWeight="SemiBold" FontSize="13"
+                               Foreground="{StaticResource TextPrimaryBrush}"/>
+                    <TextBlock Text="• reservations.txt – rezervace" FontSize="12"
+                               Foreground="{StaticResource TextSecondaryBrush}"/>
+                    <TextBlock Text="• resources.txt   – prostředky (učebny, sportoviště…)" FontSize="12"
+                               Foreground="{StaticResource TextSecondaryBrush}"/>
+                    <TextBlock Text="• users.txt       – seznam uživatelů" FontSize="12"
+                               Foreground="{StaticResource TextSecondaryBrush}"/>
+                    <TextBlock Text="• settings.txt    – nastavení aplikace" FontSize="12"
+                               Foreground="{StaticResource TextSecondaryBrush}"/>
                 </StackPanel>
             </Border>
 
             <!-- Stav -->
             <TextBlock Text="{Binding StatusMessage}"
-                       Foreground="#388E3C" FontSize="13"
+                       Foreground="{StaticResource SuccessBrush}" FontSize="13"
                        IsVisible="{Binding StatusMessage,
                            Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
 
@@ -58,11 +77,11 @@
             <StackPanel Orientation="Horizontal" Spacing="8">
                 <Button Content="← Zpět"
                         Command="{Binding BackCommand}"
-                        Padding="16,8" CornerRadius="4"/>
+                        Padding="16,8"/>
                 <Button Content="Uložit nastavení"
                         Command="{Binding SaveCommand}"
-                        Background="#1976D2" Foreground="White"
-                        Padding="16,8" CornerRadius="4"/>
+                        Background="{StaticResource PrimaryBrush}" Foreground="White"
+                        Padding="16,8"/>
             </StackPanel>
 
         </StackPanel>
