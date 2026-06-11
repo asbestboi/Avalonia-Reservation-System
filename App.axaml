@@ -8,7 +8,7 @@
     </Application.DataTemplates>
 
     <Application.Resources>
-        <!-- Barevná paleta aplikace -->
+        <!-- Barevna paleta aplikace -->
         <Color x:Key="PrimaryColor">#1976D2</Color>
         <Color x:Key="PrimaryDarkColor">#1565C0</Color>
         <Color x:Key="DangerColor">#E53935</Color>
@@ -19,7 +19,7 @@
         <SolidColorBrush x:Key="DangerBrush" Color="#E53935"/>
         <SolidColorBrush x:Key="SuccessBrush" Color="#2E7D32"/>
 
-        <!-- Neutrální plochy a text -->
+        <!-- Neutralni plochy a text -->
         <SolidColorBrush x:Key="AppBackgroundBrush" Color="#F4F6F8"/>
         <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="SurfaceAltBrush" Color="#F8F9FA"/>
@@ -32,12 +32,12 @@
     <Application.Styles>
         <FluentTheme />
 
-        <!-- Globální vzhled -->
+        <!-- Globalni vzhled -->
         <Style Selector="Window">
             <Setter Property="Background" Value="{StaticResource AppBackgroundBrush}"/>
         </Style>
 
-        <!-- Sjednocené ovládací prvky -->
+        <!-- Sjednocene ovladaci prvky -->
         <Style Selector="Button">
             <Setter Property="CornerRadius" Value="6"/>
             <Setter Property="Padding" Value="14,7"/>

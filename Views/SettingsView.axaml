@@ -10,13 +10,13 @@
             <TextBlock Text="Nastavení" FontSize="24" FontWeight="Bold"
                        Foreground="{StaticResource TextPrimaryBrush}"/>
 
-            <!-- Karta s nastavením -->
+            <!-- Karta s nastavenim -->
             <Border Background="{StaticResource SurfaceBrush}"
                     BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
                     CornerRadius="10" Padding="20">
                 <StackPanel Spacing="20">
 
-                    <!-- Výchozí uživatel -->
+                    <!-- Vychozi uzivatel -->
                     <StackPanel Spacing="6">
                         <TextBlock Text="Výchozí uživatel" FontWeight="SemiBold"
                                    Foreground="{StaticResource TextPrimaryBrush}"/>
@@ -27,7 +27,7 @@
                                   HorizontalAlignment="Stretch"/>
                     </StackPanel>
 
-                    <!-- Výchozí délka rezervace -->
+                    <!-- Vychozi delka rezervace -->
                     <StackPanel Spacing="6">
                         <TextBlock Text="Výchozí délka rezervace (minuty)" FontWeight="SemiBold"
                                    Foreground="{StaticResource TextPrimaryBrush}"/>
@@ -36,7 +36,7 @@
                                        HorizontalAlignment="Stretch"/>
                     </StackPanel>
 
-                    <!-- Cesta k datům -->
+                    <!-- Cesta k datum -->
                     <StackPanel Spacing="6">
                         <TextBlock Text="Umístění dat (AppData)" FontWeight="SemiBold"
                                    Foreground="{StaticResource TextPrimaryBrush}"/>
@@ -49,7 +49,7 @@
                 </StackPanel>
             </Border>
 
-            <!-- Soubory uložené v AppData -->
+            <!-- Soubory ulozene v AppData -->
             <Border Background="{StaticResource SurfaceAltBrush}"
                     BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
                     Padding="16" CornerRadius="10">
@@ -73,7 +73,7 @@
                        IsVisible="{Binding StatusMessage,
                            Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
 
-            <!-- Tlačítka -->
+            <!-- Tlacitka -->
             <StackPanel Orientation="Horizontal" Spacing="8">
                 <Button Content="← Zpět"
                         Command="{Binding BackCommand}"

@@ -38,13 +38,13 @@
 
     <Grid ColumnDefinitions="*,16,300" Margin="20">
 
-        <!-- Calendar section -->
+        <!-- Sekce kalendare -->
         <Border Grid.Column="0" Background="{StaticResource SurfaceBrush}"
                 BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
                 CornerRadius="10" Padding="16">
         <Grid RowDefinitions="Auto,Auto,*">
 
-            <!-- Month navigation -->
+            <!-- Navigace mesicu -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,12">
                 <Button Grid.Column="0"
                         Content="‹" FontSize="20"
@@ -60,7 +60,7 @@
                         Padding="12,4" CornerRadius="4"/>
             </Grid>
 
-            <!-- Day-of-week headers -->
+            <!-- Zahlavi dnu v tydnu -->
             <UniformGrid Grid.Row="1" Columns="7" Margin="0,0,0,4">
                 <TextBlock Text="Po" HorizontalAlignment="Center" FontWeight="SemiBold" FontSize="12" Foreground="#555"/>
                 <TextBlock Text="Út" HorizontalAlignment="Center" FontWeight="SemiBold" FontSize="12" Foreground="#555"/>
@@ -71,7 +71,7 @@
                 <TextBlock Text="Ne" HorizontalAlignment="Center" FontWeight="SemiBold" FontSize="12" Foreground="#E53935"/>
             </UniformGrid>
 
-            <!-- Calendar grid -->
+            <!-- Mrizka kalendare -->
             <ItemsControl Grid.Row="2" ItemsSource="{Binding CalendarDays}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -81,7 +81,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Panel Margin="2" MinHeight="52">
-                            <!-- Empty placeholder keeps grid spacing -->
+                            <!-- Prazdny zastupny prvek zachovava rozestup mrizky -->
                             <Button IsVisible="{Binding IsNotEmpty}"
                                     Classes.day="True"
                                     Classes.today="{Binding IsToday}"
@@ -108,7 +108,7 @@
         </Grid>
         </Border>
 
-        <!-- Daily detail section -->
+        <!-- Sekce denniho detailu -->
         <Border Grid.Column="2" Background="{StaticResource SurfaceBrush}"
                 BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
                 CornerRadius="10" Padding="16">

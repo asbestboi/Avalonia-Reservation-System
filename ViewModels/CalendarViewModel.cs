@@ -45,11 +45,11 @@ public partial class CalendarViewModel : ViewModelBase
     {
         CalendarDays.Clear();
 
-        // Monday-based week: Monday=0 offset
+        // Tyden zacinajici pondelim: pondeli=0 offset
         var firstDay = new DateTime(CurrentMonth.Year, CurrentMonth.Month, 1);
         var daysInMonth = DateTime.DaysInMonth(CurrentMonth.Year, CurrentMonth.Month);
 
-        // ISO: Monday = 1 ... Sunday = 7
+        // ISO: pondeli = 1 ... nedele = 7
         var startOffset = (int)firstDay.DayOfWeek;
         if (startOffset == 0) startOffset = 7;
         startOffset--;

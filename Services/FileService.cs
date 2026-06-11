@@ -104,15 +104,15 @@ public class FileService
         {
             users =
             [
-                new() { Name = "Adam Bauer", Email = "adam.bauer@skola.cz" },
-                new() { Name = "Jan Novák", Email = "jan.novak@skola.cz" },
-                new() { Name = "Marie Dvořáková", Email = "marie.dvorakova@skola.cz" }
+                new() { Name = "Illia Chantai", Email = "illia.chantai@skolakrizik.cz" },
+                new() { Name = "Rudolf Lingens", Email = "rudolf.lingens@skolakrizik.cz" },
+                new() { Name = "Adam Bauer", Email = "adam.bauer@skolakrizik.cz" }
             ];
             SaveUsers(users);
         }
         else if (!users.Any(u => u.Name == "Adam Bauer"))
         {
-            users.Add(new() { Name = "Adam Bauer", Email = "adam.bauer@skola.cz" });
+            users.Add(new() { Name = "Adam Bauer", Email = "adam.bauer@skolakrizik.cz" });
             SaveUsers(users);
         }
     }

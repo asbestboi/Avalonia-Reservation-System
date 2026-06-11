@@ -1,15 +1,15 @@
-// AppData folder is managed by Services.AppDataService.
-// On Windows  : %APPDATA%\ReservationSystem\
-// On Linux    : ~/.config/ReservationSystem\   (or XDG_CONFIG_HOME)
-// On macOS    : ~/Library/Application Support\ReservationSystem\
+// Slozku AppData spravuje Services.AppDataService.
+// Na Windows  : %APPDATA%\ReservationSystem\
+// Na Linux    : ~/.config/ReservationSystem\   (nebo XDG_CONFIG_HOME)
+// Na macOS    : ~/Library/Application Support\ReservationSystem\
 //
-// Files stored there:
-//   reservations.txt  – all reservations (pipe-separated)
-//   resources.txt     – reservable resources (rooms, facilities, equipment)
-//   users.txt         – user list
-//   settings.txt      – application settings
+// Ulozene soubory:
+//   reservations.txt  - vsechny rezervace (oddelene svislitkem)
+//   resources.txt     - rezervovatelne prostredky (mistnosti, zarizeni, vybaveni)
+//   users.txt         - seznam uzivatelu
+//   settings.txt      - nastaveni aplikace
 
 namespace ReservationSystem;
 
-// Marker class — keeps this folder visible in solution explorers.
+// Znackovaci trida - udrzuje tuto slozku viditelnou v prehledu reseni.
 internal static class AppDataFolder { }
